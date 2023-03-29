@@ -157,7 +157,7 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
 
     // 博主信息 (显示在首页侧边栏)
     blogger: {
-      avatar: "/img/avatar.jpg",
+      avatar: "/my-blog-next/img/avatar.jpg",
       name: "Mocheng.shuai",
       slogan: "谈谈笑笑, 跑跑跳跳",
     },
