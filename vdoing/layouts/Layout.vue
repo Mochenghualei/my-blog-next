@@ -1,61 +1,46 @@
 <template>
-  <div
-    class="theme-container"
-    :class="pageClasses"
-    @touchstart="onTouchStart"
-    @touchend="onTouchEnd"
-  >
-    <Navbar v-if="shouldShowNavbar" @toggle-sidebar="toggleSidebar" />
+  <div>
+    <!-- 置顶进度条 -->
+    <BaseTopProgressBar />
+    <div class="theme-container" :class="pageClasses" @touchstart="onTouchStart" @touchend="onTouchEnd">
+      <Navbar v-if="shouldShowNavbar" @toggle-sidebar="toggleSidebar" />
 
-    <div class="sidebar-mask" @click="toggleSidebar(false)"></div>
+      <div class="sidebar-mask" @click="toggleSidebar(false)"></div>
 
-    <div
-      v-if="$themeConfig.sidebarHoverTriggerOpen !== false"
-      class="sidebar-hover-trigger"
-    ></div>
+      <div v-if="$themeConfig.sidebarHoverTriggerOpen !== false" class="sidebar-hover-trigger"></div>
 
-    <Sidebar
-      :items="sidebarItems"
-      @toggle-sidebar="toggleSidebar"
-      v-show="showSidebar"
-    >
-      <template #top v-if="sidebarSlotTop">
-        <div
-          class="sidebar-slot sidebar-slot-top"
-          v-html="sidebarSlotTop"
-        ></div>
-      </template>
-      <template #bottom v-if="sidebarSlotBottom">
-        <div
-          class="sidebar-slot sidebar-slot-bottom"
-          v-html="sidebarSlotBottom"
-        ></div>
-      </template>
-      <!-- <slot name="sidebar-top" #top />
+      <Sidebar :items="sidebarItems" @toggle-sidebar="toggleSidebar" v-show="showSidebar">
+        <template #top v-if="sidebarSlotTop">
+          <div class="sidebar-slot sidebar-slot-top" v-html="sidebarSlotTop"></div>
+        </template>
+        <template #bottom v-if="sidebarSlotBottom">
+          <div class="sidebar-slot sidebar-slot-bottom" v-html="sidebarSlotBottom"></div>
+        </template>
+        <!-- <slot name="sidebar-top" #top />
       <slot name="sidebar-bottom" #bottom /> -->
-    </Sidebar>
+      </Sidebar>
 
-    <!-- 首页 -->
-    <Home v-if="$page.frontmatter.home" />
+      <!-- 首页 -->
+      <Home v-if="$page.frontmatter.home" />
 
-    <!-- 分类页 -->
-    <CategoriesPage v-else-if="$page.frontmatter.categoriesPage" />
+      <!-- 分类页 -->
+      <CategoriesPage v-else-if="$page.frontmatter.categoriesPage" />
 
-    <!-- 标签页 -->
-    <TagsPage v-else-if="$page.frontmatter.tagsPage" />
+      <!-- 标签页 -->
+      <TagsPage v-else-if="$page.frontmatter.tagsPage" />
 
-    <!-- 归档页 -->
-    <ArchivesPage v-else-if="$page.frontmatter.archivesPage" />
+      <!-- 归档页 -->
+      <ArchivesPage v-else-if="$page.frontmatter.archivesPage" />
 
-    <!-- 文章页或其他页 -->
-    <Page v-else :sidebar-items="sidebarItems">
-      <template #top v-if="pageSlotTop">
-        <div class="page-slot page-slot-top" v-html="pageSlotTop"></div>
-      </template>
-      <template #bottom v-if="pageSlotBottom">
-        <div class="page-slot page-slot-bottom" v-html="pageSlotBottom"></div>
-      </template>
-      <!-- <slot
+      <!-- 文章页或其他页 -->
+      <Page v-else :sidebar-items="sidebarItems">
+        <template #top v-if="pageSlotTop">
+          <div class="page-slot page-slot-top" v-html="pageSlotTop"></div>
+        </template>
+        <template #bottom v-if="pageSlotBottom">
+          <div class="page-slot page-slot-bottom" v-html="pageSlotBottom"></div>
+        </template>
+        <!-- <slot
         name="page-top"
         #top
       />
@@ -63,33 +48,26 @@
         name="page-bottom"
         #bottom
       /> -->
-    </Page>
+      </Page>
 
-    <Footer />
+      <Footer />
 
-    <Buttons ref="buttons" @toggle-theme-mode="toggleThemeMode" />
+      <Buttons ref="buttons" @toggle-theme-mode="toggleThemeMode" />
 
-    <BodyBgImg v-if="$themeConfig.bodyBgImg" />
+      <BodyBgImg v-if="$themeConfig.bodyBgImg" />
 
-    <!-- 自定义html插入左右下角的小窗口 -->
-    <div
-      class="custom-html-window custom-html-window-lb"
-      v-if="windowLB"
-      v-show="showWindowLB"
-    >
-      <div class="custom-wrapper">
-        <span class="close-but" @click="showWindowLB = false">×</span>
-        <div v-html="windowLB" />
+      <!-- 自定义html插入左右下角的小窗口 -->
+      <div class="custom-html-window custom-html-window-lb" v-if="windowLB" v-show="showWindowLB">
+        <div class="custom-wrapper">
+          <span class="close-but" @click="showWindowLB = false">×</span>
+          <div v-html="windowLB" />
+        </div>
       </div>
-    </div>
-    <div
-      class="custom-html-window custom-html-window-rb"
-      v-if="windowRB"
-      v-show="showWindowRB"
-    >
-      <div class="custom-wrapper">
-        <span class="close-but" @click="showWindowRB = false">×</span>
-        <div v-html="windowRB" />
+      <div class="custom-html-window custom-html-window-rb" v-if="windowRB" v-show="showWindowRB">
+        <div class="custom-wrapper">
+          <span class="close-but" @click="showWindowRB = false">×</span>
+          <div v-html="windowRB" />
+        </div>
       </div>
     </div>
   </div>
@@ -104,6 +82,7 @@ import TagsPage from '@theme/components/TagsPage.vue'
 import ArchivesPage from '@theme/components/ArchivesPage.vue'
 import Sidebar from '@theme/components/Sidebar.vue'
 import Buttons from '@theme/components/Buttons.vue'
+import BaseTopProgressBar from "@theme/components/BaseTopProgressBar.vue"
 import Footer from '@theme/components/Footer'
 import BodyBgImg from '@theme/components/BodyBgImg'
 import { resolveSidebarItems } from '../util'
@@ -114,7 +93,7 @@ const MOBILE_DESKTOP_BREAKPOINT = 719 // refer to config.styl
 const NAVBAR_HEIGHT = 58 // 导航栏高度
 
 export default {
-  components: { Home, Navbar, Page, CategoriesPage, TagsPage, ArchivesPage, Sidebar, Footer, Buttons, BodyBgImg },
+  components: { BaseTopProgressBar,Home, Navbar, Page, CategoriesPage, TagsPage, ArchivesPage, Sidebar, Footer, Buttons, BodyBgImg },
 
   data() {
     return {
@@ -218,9 +197,9 @@ export default {
     const mode = storage.get('mode') // 不放在created是因为vuepress不能在created访问浏览器api，如window
     const { defaultMode } = this.$themeConfig
 
-    if (defaultMode && defaultMode !== 'auto' && !mode ) {
+    if (defaultMode && defaultMode !== 'auto' && !mode) {
       this.themeMode = defaultMode
-    } else if(!mode || mode === 'auto' || defaultMode === 'auto') { // 当未切换过模式，或模式处于'跟随系统'时
+    } else if (!mode || mode === 'auto' || defaultMode === 'auto') { // 当未切换过模式，或模式处于'跟随系统'时
       this._autoMode()
     } else {
       this.themeMode = mode
