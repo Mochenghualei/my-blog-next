@@ -19,7 +19,7 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
   locales: {
     "/": {
       lang: "zh-CN",
-      title: "mocheng >_",
+      title: "mocheng",
       description: "欢迎访问我的博客",
     },
   },
@@ -117,7 +117,7 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
       },
     ],
     sidebarDepth: 2, // 侧边栏显示深度，默认1，最大2（显示到h3标题）
-    logo: "/img/avatar.jpg", // 导航栏logo
+    logo: "/img/avatar.png", // 导航栏logo
     repo: "Mochenghualei", // 导航栏右侧生成Github链接
     searchMaxSuggestions: 10, // 搜索结果显示最大数
     lastUpdated: "上次更新", // 开启更新时间，并配置前缀文字   string | boolean (取值为git提交时间)
@@ -135,7 +135,7 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
 
     // pageStyle: "line", // 页面风格，可选值：'card'卡片 | 'line' 线（未设置bodyBgImg时才生效）， 默认'card'。 说明：card时背景显示灰色衬托出卡片样式，line时背景显示纯色，并且部分模块带线条边框
 
-    bodyBgImg: "/img/bg1.jpg", // body背景大图，默认无。 单张图片 String | 多张图片 Array, 多张图片时隔bodyBgImgInterval切换一张。
+    bodyBgImg: "/img/test.jpeg", // body背景大图，默认无。 单张图片 String | 多张图片 Array, 多张图片时隔bodyBgImgInterval切换一张。
     bodyBgImgOpacity: 0.8, // body背景图透明度，选值 0.1~1.0, 默认0.5
     // bodyBgImgInterval: 15, // body多张背景图时的切换间隔, 默认15，单位s
     // titleBadge: false, // 文章标题前的图标是否显示，默认true
