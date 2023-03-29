@@ -1,22 +1,24 @@
 <template>
   <div class="main-wrapper">
-    <div class="main-left">
-      <slot name="mainLeft" />
-    </div>
-
     <div class="main-right">
       <slot name="mainRight" />
+    </div>
+
+    <div class="main-left">
+      <slot name="mainLeft" />
     </div>
   </div>
 </template>
 <style lang="stylus">
 .main-wrapper
   margin 1.5rem auto 0 auto
-  max-width $homePageWidth
+  // max-width $homePageWidth
+  max-width 80%
   padding 0 0.9rem
   box-sizing border-box
   position relative
   display flex
+  gap 1.5rem
   .main-left
     flex 1
     // width 72%

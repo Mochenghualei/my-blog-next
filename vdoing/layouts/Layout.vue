@@ -50,7 +50,9 @@
       /> -->
       </Page>
 
-      <Footer />
+      <div class="footer-mask">
+        <Footer />
+      </div>
 
       <Buttons ref="buttons" @toggle-theme-mode="toggleThemeMode" />
 
@@ -358,4 +360,6 @@ export default {
     justify-content flex-end
     &>*
       align-self flex-end
+.footer-mask
+  width 100%
 </style>
