@@ -18,7 +18,7 @@ function createSidebarData(sourceDir, collapsable) {
 
     if (toc.substr(-6) === '_posts') { // 碎片化文章
 
-      // 注释说明：碎片化文章不需要生成结构化侧边栏 2020.05.01
+      // 注释说明：碎片化文章不需要生成结构化侧边栏 2021.05.01
       // const sidebarArr = mapTocToPostSidebar(toc);
       // sidebarData[`/${path.basename(toc)}/`] = sidebarArr
 
