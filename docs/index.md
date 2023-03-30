@@ -31,8 +31,8 @@ hideRightBar: false # 是否隐藏右侧边栏
 
 ## :email: 取得联系
 
-- **WeChat**: <a href="javascript:;" class='wechat'>15932130680</a>
-- **Email**: <a href="mailto:18830279823@163.com">18830279823@163.com</a>
+<!-- - **WeChat**: <a href="javascript:;" class='wechat'>15932130680</a> -->
+- **Email**: <a href="mailto:18830279823@163.com" class='wechat'>18830279823@163.com</a>
 - **GitHub**: <https://github.com/Mochenghualei>
 
 </br>
