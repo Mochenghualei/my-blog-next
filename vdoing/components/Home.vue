@@ -68,6 +68,11 @@
           </div>
         </div>
         <!-- PC端features块 e -->
+
+        <!-- 向下按钮 -->
+        <div class="start-btn">
+          <button @click="scrollToMain">立即开始</button>
+        </div>
       </div>
 
       <!-- 移动端features块 s -->
@@ -338,6 +343,11 @@ export default {
     },
   },
   methods: {
+    scrollToMain() {
+      document
+        .querySelector(".main-layout-mask")
+        .scrollIntoView({ behavior: "smooth" });
+    },
     refetch(state) {
       if (state) {
         this.fetchYiYan();
@@ -420,7 +430,7 @@ export default {
       overflow hidden
       .hero
         text-align center
-        margin-top 5rem
+        margin-top 3.5rem
         img
           max-width 100%
           max-height 240px
@@ -621,4 +631,19 @@ export default {
 .main-layout-mask
   padding-top 2rem
   width 100%
+
+.start-btn button
+  margin 0 auto
+  display block
+  font-size 1rem
+  background-color #11a8cd
+  padding 0.4rem 1rem
+  border-radius 4px
+  transition background-color .1s ease
+  box-sizing border-box
+  outline none
+  border none
+  color #fff
+  &:hover
+    background-color #58bbe3    
 </style>
