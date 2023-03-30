@@ -277,6 +277,9 @@ export default {
     Pagination,
     BasePrintText,
   },
+  beforeCreate() {
+    document.title = "ヾ(^▽^*)))欢迎访问";
+  },
   created() {
     this.total = this.$sortPosts.length;
   },

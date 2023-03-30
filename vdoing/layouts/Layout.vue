@@ -2,19 +2,37 @@
   <div>
     <!-- 置顶进度条 -->
     <BaseTopProgressBar />
-    <div class="theme-container" :class="pageClasses" @touchstart="onTouchStart" @touchend="onTouchEnd">
+    <div
+      class="theme-container"
+      :class="pageClasses"
+      @touchstart="onTouchStart"
+      @touchend="onTouchEnd"
+    >
       <Navbar v-if="shouldShowNavbar" @toggle-sidebar="toggleSidebar" />
 
       <div class="sidebar-mask" @click="toggleSidebar(false)"></div>
 
-      <div v-if="$themeConfig.sidebarHoverTriggerOpen !== false" class="sidebar-hover-trigger"></div>
+      <div
+        v-if="$themeConfig.sidebarHoverTriggerOpen !== false"
+        class="sidebar-hover-trigger"
+      ></div>
 
-      <Sidebar :items="sidebarItems" @toggle-sidebar="toggleSidebar" v-show="showSidebar">
+      <Sidebar
+        :items="sidebarItems"
+        @toggle-sidebar="toggleSidebar"
+        v-show="showSidebar"
+      >
         <template #top v-if="sidebarSlotTop">
-          <div class="sidebar-slot sidebar-slot-top" v-html="sidebarSlotTop"></div>
+          <div
+            class="sidebar-slot sidebar-slot-top"
+            v-html="sidebarSlotTop"
+          ></div>
         </template>
         <template #bottom v-if="sidebarSlotBottom">
-          <div class="sidebar-slot sidebar-slot-bottom" v-html="sidebarSlotBottom"></div>
+          <div
+            class="sidebar-slot sidebar-slot-bottom"
+            v-html="sidebarSlotBottom"
+          ></div>
         </template>
         <!-- <slot name="sidebar-top" #top />
       <slot name="sidebar-bottom" #bottom /> -->
@@ -59,13 +77,21 @@
       <BodyBgImg v-if="$themeConfig.bodyBgImg" />
 
       <!-- 自定义html插入左右下角的小窗口 -->
-      <div class="custom-html-window custom-html-window-lb" v-if="windowLB" v-show="showWindowLB">
+      <div
+        class="custom-html-window custom-html-window-lb"
+        v-if="windowLB"
+        v-show="showWindowLB"
+      >
         <div class="custom-wrapper">
           <span class="close-but" @click="showWindowLB = false">×</span>
           <div v-html="windowLB" />
         </div>
       </div>
-      <div class="custom-html-window custom-html-window-rb" v-if="windowRB" v-show="showWindowRB">
+      <div
+        class="custom-html-window custom-html-window-rb"
+        v-if="windowRB"
+        v-show="showWindowRB"
+      >
         <div class="custom-wrapper">
           <span class="close-but" @click="showWindowRB = false">×</span>
           <div v-html="windowRB" />
@@ -76,91 +102,102 @@
 </template>
 
 <script>
-import Home from '@theme/components/Home.vue'
-import Navbar from '@theme/components/Navbar.vue'
-import Page from '@theme/components/Page.vue'
-import CategoriesPage from '@theme/components/CategoriesPage.vue'
-import TagsPage from '@theme/components/TagsPage.vue'
-import ArchivesPage from '@theme/components/ArchivesPage.vue'
-import Sidebar from '@theme/components/Sidebar.vue'
-import Buttons from '@theme/components/Buttons.vue'
-import BaseTopProgressBar from "@theme/components/BaseTopProgressBar.vue"
-import Footer from '@theme/components/Footer'
-import BodyBgImg from '@theme/components/BodyBgImg'
-import { resolveSidebarItems } from '../util'
-import storage from 'good-storage' // 本地存储
-import _ from 'lodash'
+import Home from "@theme/components/Home.vue";
+import Navbar from "@theme/components/Navbar.vue";
+import Page from "@theme/components/Page.vue";
+import CategoriesPage from "@theme/components/CategoriesPage.vue";
+import TagsPage from "@theme/components/TagsPage.vue";
+import ArchivesPage from "@theme/components/ArchivesPage.vue";
+import Sidebar from "@theme/components/Sidebar.vue";
+import Buttons from "@theme/components/Buttons.vue";
+import BaseTopProgressBar from "@theme/components/BaseTopProgressBar.vue";
+import Footer from "@theme/components/Footer";
+import BodyBgImg from "@theme/components/BodyBgImg";
+import { resolveSidebarItems } from "../util";
+import storage from "good-storage"; // 本地存储
+import _ from "lodash";
 
-const MOBILE_DESKTOP_BREAKPOINT = 719 // refer to config.styl
-const NAVBAR_HEIGHT = 58 // 导航栏高度
+const MOBILE_DESKTOP_BREAKPOINT = 719; // refer to config.styl
+const NAVBAR_HEIGHT = 58; // 导航栏高度
 
 export default {
-  components: { BaseTopProgressBar,Home, Navbar, Page, CategoriesPage, TagsPage, ArchivesPage, Sidebar, Footer, Buttons, BodyBgImg },
+  components: {
+    BaseTopProgressBar,
+    Home,
+    Navbar,
+    Page,
+    CategoriesPage,
+    TagsPage,
+    ArchivesPage,
+    Sidebar,
+    Footer,
+    Buttons,
+    BodyBgImg,
+  },
 
   data() {
     return {
+      timer: null,
       hideNavbar: false,
       isSidebarOpen: true,
       showSidebar: false,
-      themeMode: 'auto',
+      themeMode: "auto",
       showWindowLB: true,
-      showWindowRB: true
-    }
+      showWindowRB: true,
+    };
   },
   computed: {
     sidebarSlotTop() {
-      return this.getHtmlStr('sidebarT')
+      return this.getHtmlStr("sidebarT");
     },
     sidebarSlotBottom() {
-      return this.getHtmlStr('sidebarB')
+      return this.getHtmlStr("sidebarB");
     },
     pageSlotTop() {
-      return this.getHtmlStr('pageT')
+      return this.getHtmlStr("pageT");
     },
     pageSlotBottom() {
-      return this.getHtmlStr('pageB')
+      return this.getHtmlStr("pageB");
     },
     windowLB() {
-      return this.getHtmlStr('windowLB')
+      return this.getHtmlStr("windowLB");
     },
     windowRB() {
-      return this.getHtmlStr('windowRB')
+      return this.getHtmlStr("windowRB");
     },
     showRightMenu() {
-      const { headers } = this.$page
+      const { headers } = this.$page;
       return (
-        !this.$frontmatter.home
-        && this.$themeConfig.rightMenuBar !== false
-        && headers
-        && headers.length
-        && this.$frontmatter.sidebar !== false
-      )
+        !this.$frontmatter.home &&
+        this.$themeConfig.rightMenuBar !== false &&
+        headers &&
+        headers.length &&
+        this.$frontmatter.sidebar !== false
+      );
     },
     shouldShowNavbar() {
-      const { themeConfig } = this.$site
-      const { frontmatter } = this.$page
-      if (
-        frontmatter.navbar === false
-        || themeConfig.navbar === false) {
-        return false
+      const { themeConfig } = this.$site;
+      const { frontmatter } = this.$page;
+      if (frontmatter.navbar === false || themeConfig.navbar === false) {
+        return false;
       }
       return (
-        this.$title
-        || themeConfig.logo
-        || themeConfig.repo
-        || themeConfig.nav
-        || this.$themeLocaleConfig.nav
-      )
+        this.$title ||
+        themeConfig.logo ||
+        themeConfig.repo ||
+        themeConfig.nav ||
+        this.$themeLocaleConfig.nav
+      );
     },
 
     shouldShowSidebar() {
-      const { frontmatter } = this.$page
+      const { frontmatter } = this.$page;
       return (
-        !frontmatter.home
-        && frontmatter.sidebar !== false
-        && this.sidebarItems.length
-        && frontmatter.showSidebar !== false
-      )
+        !frontmatter.home &&
+        frontmatter.sidebar !== false &&
+        this.sidebarItems.length &&
+        frontmatter.showSidebar !== false
+      );
     },
 
     sidebarItems() {
@@ -169,155 +206,193 @@ export default {
         this.$page.regularPath,
         this.$site,
         this.$localePath
-      )
+      );
     },
 
     pageClasses() {
-      const userPageClass = this.$page.frontmatter.pageClass
+      const userPageClass = this.$page.frontmatter.pageClass;
       return [
         {
-          'no-navbar': !this.shouldShowNavbar,
-          'hide-navbar': this.hideNavbar, // 向下滚动隐藏导航栏
-          'sidebar-open': this.isSidebarOpen,
-          'no-sidebar': !this.shouldShowSidebar,
-          'have-rightmenu': this.showRightMenu,
-          'have-body-img': this.$themeConfig.bodyBgImg,
-          'only-sidebarItem': this.sidebarItems.length === 1 && this.sidebarItems[0].type === 'page', // 左侧边栏只有一项时
+          "no-navbar": !this.shouldShowNavbar,
+          "hide-navbar": this.hideNavbar, // 向下滚动隐藏导航栏
+          "sidebar-open": this.isSidebarOpen,
+          "no-sidebar": !this.shouldShowSidebar,
+          "have-rightmenu": this.showRightMenu,
+          "have-body-img": this.$themeConfig.bodyBgImg,
+          "only-sidebarItem":
+            this.sidebarItems.length === 1 &&
+            this.sidebarItems[0].type === "page", // 左侧边栏只有一项时
         },
-        userPageClass
-      ]
-    }
+        userPageClass,
+      ];
+    },
   },
   created() {
-    const sidebarOpen = this.$themeConfig.sidebarOpen
+    const sidebarOpen = this.$themeConfig.sidebarOpen;
     if (sidebarOpen === false) {
-      this.isSidebarOpen = sidebarOpen
+      this.isSidebarOpen = sidebarOpen;
     }
   },
   beforeMount() {
-    this.isSidebarOpenOfclientWidth()
-    const mode = storage.get('mode') // 不放在created是因为vuepress不能在created访问浏览器api，如window
-    const { defaultMode } = this.$themeConfig
+    this.isSidebarOpenOfclientWidth();
+    const mode = storage.get("mode"); // 不放在created是因为vuepress不能在created访问浏览器api，如window
+    const { defaultMode } = this.$themeConfig;
 
-    if (defaultMode && defaultMode !== 'auto' && !mode) {
-      this.themeMode = defaultMode
-    } else if (!mode || mode === 'auto' || defaultMode === 'auto') { // 当未切换过模式，或模式处于'跟随系统'时
-      this._autoMode()
+    if (defaultMode && defaultMode !== "auto" && !mode) {
+      this.themeMode = defaultMode;
+    } else if (!mode || mode === "auto" || defaultMode === "auto") {
+      // 当未切换过模式，或模式处于'跟随系统'时
+      this._autoMode();
     } else {
-      this.themeMode = mode
+      this.themeMode = mode;
     }
-    this.setBodyClass()
+    this.setBodyClass();
 
     // 引入图标库
-    const social = this.$themeConfig.social
+    const social = this.$themeConfig.social;
     if (social && social.iconfontCssFile) {
-      let linkElm = document.createElement("link")
-      linkElm.setAttribute('rel', 'stylesheet');
-      linkElm.setAttribute("type", "text/css")
-      linkElm.setAttribute("href", social.iconfontCssFile)
-      document.head.appendChild(linkElm)
+      let linkElm = document.createElement("link");
+      linkElm.setAttribute("rel", "stylesheet");
+      linkElm.setAttribute("type", "text/css");
+      linkElm.setAttribute("href", social.iconfontCssFile);
+      document.head.appendChild(linkElm);
     }
   },
   mounted() {
+    let that = this;
+    // 修改页面标题
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) {
+        document.title = "(｡í _ ì｡)不要走呀";
+      } else {
+        document.title = "ヾ(^▽^*)))欢迎回来!";
+        this.timer = setTimeout(() => {
+          document.title =
+            that.$page.title == "Home"
+              ? "ヾ(^▽^*)))欢迎访问"
+              : that.$page.title || '"ヾ(^▽^*)))欢迎访问';
+        }, 1000);
+      }
+    });
     // 初始化页面时链接锚点无法跳转到指定id的解决方案
     const hash = document.location.hash;
     if (hash.length > 1) {
-      const id = decodeURIComponent(hash.substring(1))
-      const element = document.getElementById(id)
-      if (element) element.scrollIntoView()
+      const id = decodeURIComponent(hash.substring(1));
+      const element = document.getElementById(id);
+      if (element) element.scrollIntoView();
     }
 
     // 解决移动端初始化页面时侧边栏闪现的问题
-    this.showSidebar = true
+    this.showSidebar = true;
     this.$router.afterEach(() => {
-      this.isSidebarOpenOfclientWidth()
-    })
+      this.isSidebarOpenOfclientWidth();
+    });
 
     // 向下滚动收起导航栏
-    let p = 0, t = 0;
-    window.addEventListener('scroll', _.throttle(() => {
-      if (!this.isSidebarOpen) { // 侧边栏关闭时
-        p = this.getScrollTop()
-        if (t < p && p > NAVBAR_HEIGHT) { // 向下滚动
-          this.hideNavbar = true
-        } else { // 向上
-          this.hideNavbar = false
+    let p = 0,
+      t = 0;
+    window.addEventListener(
+      "scroll",
+      _.throttle(() => {
+        if (!this.isSidebarOpen) {
+          // 侧边栏关闭时
+          p = this.getScrollTop();
+          if (t < p && p > NAVBAR_HEIGHT) {
+            // 向下滚动
+            this.hideNavbar = true;
+          } else {
+            // 向上
+            this.hideNavbar = false;
+          }
+          setTimeout(() => {
+            t = p;
+          }, 0);
         }
-        setTimeout(() => { t = p }, 0)
-      }
-    }, 300))
+      }, 300)
+    );
+  },
+  beforeDestroy() {
+    clearTimeout(this.timer);
+    this.timer = null;
   },
   watch: {
     isSidebarOpen() {
-      if (this.isSidebarOpen) {  // 侧边栏打开时，恢复导航栏显示
-        this.hideNavbar = false
+      if (this.isSidebarOpen) {
+        // 侧边栏打开时，恢复导航栏显示
+        this.hideNavbar = false;
       }
     },
     themeMode() {
-      this.setBodyClass()
-    }
+      this.setBodyClass();
+    },
   },
   methods: {
     getHtmlStr(module) {
-      const { htmlModules } = this.$themeConfig
-      return htmlModules ? htmlModules[module] : ''
+      const { htmlModules } = this.$themeConfig;
+      return htmlModules ? htmlModules[module] : "";
     },
     setBodyClass() {
-      let { pageStyle = 'card', bodyBgImg } = this.$themeConfig
-      if (pageStyle !== 'card' && pageStyle !== 'line' || bodyBgImg) { pageStyle = 'card' }
-      document.body.className = `theme-mode-${this.themeMode} theme-style-${pageStyle}`
+      let { pageStyle = "card", bodyBgImg } = this.$themeConfig;
+      if ((pageStyle !== "card" && pageStyle !== "line") || bodyBgImg) {
+        pageStyle = "card";
+      }
+      document.body.className = `theme-mode-${this.themeMode} theme-style-${pageStyle}`;
     },
     getScrollTop() {
-      return window.pageYOffset
-        || document.documentElement.scrollTop
-        || document.body.scrollTop || 0
+      return (
+        window.pageYOffset ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop ||
+        0
+      );
     },
     isSidebarOpenOfclientWidth() {
       if (document.documentElement.clientWidth < MOBILE_DESKTOP_BREAKPOINT) {
-        this.isSidebarOpen = false
+        this.isSidebarOpen = false;
       }
     },
     toggleSidebar(to) {
-      this.isSidebarOpen = typeof to === 'boolean' ? to : !this.isSidebarOpen
-      this.$emit('toggle-sidebar', this.isSidebarOpen)
+      this.isSidebarOpen = typeof to === "boolean" ? to : !this.isSidebarOpen;
+      this.$emit("toggle-sidebar", this.isSidebarOpen);
     },
     _autoMode() {
-      if (window.matchMedia('(prefers-color-scheme: dark)').matches) { // 系统处于深色模式
-        this.themeMode = 'dark'
+      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        // 系统处于深色模式
+        this.themeMode = "dark";
       } else {
-        this.themeMode = 'light'
+        this.themeMode = "light";
       }
     },
     toggleThemeMode(key) {
-      if (key === 'auto') {
-        this._autoMode()
+      if (key === "auto") {
+        this._autoMode();
       } else {
-        this.themeMode = key
+        this.themeMode = key;
       }
-      storage.set('mode', key)
+      storage.set("mode", key);
     },
 
     // side swipe
     onTouchStart(e) {
       this.touchStart = {
         x: e.changedTouches[0].clientX,
-        y: e.changedTouches[0].clientY
-      }
+        y: e.changedTouches[0].clientY,
+      };
     },
 
     onTouchEnd(e) {
-      const dx = e.changedTouches[0].clientX - this.touchStart.x
-      const dy = e.changedTouches[0].clientY - this.touchStart.y
+      const dx = e.changedTouches[0].clientX - this.touchStart.x;
+      const dy = e.changedTouches[0].clientY - this.touchStart.y;
       if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
         if (dx > 0 && this.touchStart.x <= 80) {
-          this.toggleSidebar(true)
+          this.toggleSidebar(true);
         } else {
-          this.toggleSidebar(false)
+          this.toggleSidebar(false);
         }
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="stylus">
