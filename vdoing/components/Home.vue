@@ -277,13 +277,11 @@ export default {
     Pagination,
     BasePrintText,
   },
-  beforeCreate() {
-    document.title = "ヾ(^▽^*)))欢迎访问";
-  },
   created() {
     this.total = this.$sortPosts.length;
   },
   beforeMount() {
+    document.title = "ヾ(^▽^*)))欢迎访问";
     this.isMQMobile =
       window.innerWidth < MOBILE_DESKTOP_BREAKPOINT ? true : false; // vupress在打包时不能在beforeCreate(),created()访问浏览器api（如window）
   },
