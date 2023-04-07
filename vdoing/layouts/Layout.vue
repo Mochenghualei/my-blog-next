@@ -2,6 +2,11 @@
   <div>
     <!-- 置顶进度条 -->
     <BaseTopProgressBar />
+
+    <transition name="fade">
+      <div v-show="isShowPlayer" id="player">播放器</div>
+    </transition>
+
     <div
       class="theme-container"
       :class="pageClasses"
@@ -117,6 +122,10 @@ import { resolveSidebarItems } from "../util";
 import storage from "good-storage"; // 本地存储
 import _ from "lodash";
 
+// 加载播放器
+import "APlayer/dist/APlayer.min.css";
+import APlayer from "APlayer";
+
 const MOBILE_DESKTOP_BREAKPOINT = 719; // refer to config.styl
 const NAVBAR_HEIGHT = 58; // 导航栏高度
 
@@ -137,6 +146,7 @@ export default {
 
   data() {
     return {
+      isShowPlayer: false,
       timer: null,
       hideNavbar: false,
       isSidebarOpen: true,
@@ -259,6 +269,36 @@ export default {
     }
   },
   mounted() {
+    const ap = new APlayer({
+      container: document.getElementById("player"),
+      fixed: true,
+      // mini: false,
+      autoplay: true,
+      theme: "#FADFA3",
+      // loop: "all",
+      // order: "random",
+      // preload: "auto",
+      // volume: 0.7,
+      // mutex: true,
+      // listFolded: false,
+      // listMaxHeight: 90,
+      lrcType: 3,
+      audio: [
+        {
+          name: "另一个通话",
+          artist: "G.E.M.邓紫棋",
+          url: "/audios/G.E.M. 邓紫棋-另一个童话.flac",
+          cover:
+            "https://p3.music.126.net/tXCIFsVDK6IKcQ9YWxwOEg==/109951163523944497.jpg?param=300y300",
+          lrc: "/audios/另一个童话.lrc",
+        },
+      ],
+    });
+    let timer = setTimeout(() => {
+      this.isShowPlayer = true;
+      clearTimeout(timer);
+    }, 500);
+
     let that = this;
     // 修改页面标题
     document.addEventListener("visibilitychange", function () {
@@ -437,4 +477,20 @@ export default {
       align-self flex-end
 .footer-mask
   width 100%
+
+
+.test
+  position fixed
+  top 100px
+  z-index 1000
+</style>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
 </style>
