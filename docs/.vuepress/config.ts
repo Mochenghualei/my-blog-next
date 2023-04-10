@@ -7,8 +7,6 @@ import { VdoingThemeConfig } from "vuepress-theme-vdoing/types"
 import dayjs from "dayjs"
 import baiduCode from "./config/baiduCode" // 百度统计hm码
 import htmlModules from "./config/htmlModules" // 自定义插入的html块
-// 引入搜索插件
-import { docsearchPlugin } from '@vuepress/plugin-docsearch'
 
 // 后期部署生成ip后进行修改
 // const DOMAIN_NAME = "xugaoyi.com" // 域名 (不带https)
