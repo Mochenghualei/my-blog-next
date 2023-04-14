@@ -207,12 +207,12 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
   head: [
     ["link", { rel: "icon", href: "/img/favicon.ico" }], //favicons，资源放在public文件夹
     // 看板娘
-    [
-      "script",
-      {
-        src: "https://fastly.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js",
-      },
-    ],
+    // [
+    //   "script",
+    //   {
+    //     src: "https://fastly.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js",
+    //   },
+    // ],
     [
       "meta",
       {
