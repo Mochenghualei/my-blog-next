@@ -69,9 +69,17 @@
         </div>
         <!-- PC端features块 e -->
 
-        <!-- 向下按钮 -->
-        <div class="start-btn">
+        <!-- 卡片按钮组 -->
+        <div class="btns">
+          <div class="card_btn" @click="openWeb('personal_daohang')">
+            <div class="name">前端森林</div>
+            <div class="desc">🚀 前端资源一站导航</div>
+          </div>
           <button @click="scrollToMain">立即开始</button>
+          <div class="card_btn" @click="openWeb('personal_photo')">
+            <div class="name">默城·shuai</div>
+            <div class="desc">📸 我的摄影作品集</div>
+          </div>
         </div>
       </div>
 
@@ -343,6 +351,14 @@ export default {
     },
   },
   methods: {
+    openWeb(curWeb) {
+      const webType = {
+        personal_daohang:
+          "http://mochenghualei.gitee.io/my-personal-website/#/",
+        personal_photo: "http://mochenghualei.gitee.io/my-personal-website/#/",
+      };
+      window.open(webType[curWeb], "_blank");
+    },
     scrollToMain() {
       document
         .querySelector(".main-layout-mask")
@@ -430,7 +446,7 @@ export default {
       overflow hidden
       .hero
         text-align center
-        margin-top 3.5rem
+        // margin-top 3.5rem
         img
           max-width 100%
           max-height 240px
@@ -465,7 +481,8 @@ export default {
       // pc端features
       .features
         padding 2rem 0
-        margin-top 5rem
+        margin-top 4rem
+        margin-bottom 2rem
         display flex
         flex-wrap wrap
         align-items flex-start
@@ -632,18 +649,55 @@ export default {
   padding-top 2rem
   width 100%
 
-.start-btn button
-  margin 0 auto
-  display block
-  font-size 1rem
-  background-color #11a8cd
-  padding 0.4rem 1rem
-  border-radius 4px
-  transition background-color .1s ease
-  box-sizing border-box
-  outline none
-  border none
-  color #fff
-  &:hover
-    background-color #58bbe3    
+
+
+.btns
+  display flex
+  padding 0 15rem
+  justify-content space-between
+  margin-bottom 1rem
+
+  .card_btn
+    cursor pointer
+    width calc(33% - 0.7rem)
+    background: #9aa2df;
+    border-radius: 5px;
+    border 4px solid #3e3b73
+    outline #f1f1f1 solid 5px
+    color: #fff;
+    display: flex;
+    flex-direction column
+    align-items center
+    box-shadow: 1px 1px 2px 0 rgb(0 0 0 / 6%);
+    transition: all .4s;
+
+    .name
+      font-weight 500
+      margin .5rem 0 .4rem 0
+    .desc
+      font-size: .8rem;
+      line-height: 1.1rem;
+      // opacity: .8;
+      margin-bottom: 0.5rem;
+
+    &:hover
+      // text-decoration: none;
+      box-shadow: 0 10px 20px -10px rgba(0,0,0,.15);
+      transform: translateY(-3px) scale(1.01);
+
+
+  button
+    margin 0 auto
+    display block
+    font-size 1rem
+    background-color #11a8cd
+    padding 0.4rem 1rem
+    border-radius 4px
+    transition background-color .1s ease
+    box-sizing border-box
+    outline none
+    border none
+    color #fff
+    &:hover
+      background-color #2e6987
 </style>

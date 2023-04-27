@@ -5,8 +5,8 @@ import { resolve } from "path"
 import { defineConfig4CustomTheme, UserPlugins } from "vuepress/config"
 import { VdoingThemeConfig } from "vuepress-theme-vdoing/types"
 import dayjs from "dayjs"
-import baiduCode from "./config/baiduCode" // 百度统计hm码
-import htmlModules from "./config/htmlModules" // 自定义插入的html块
+// import baiduCode from "./config/baiduCode" // 百度统计hm码
+// import htmlModules from "./config/htmlModules" // 自定义插入的html块
 
 // 后期部署生成ip后进行修改
 // const DOMAIN_NAME = "xugaoyi.com" // 域名 (不带https)
@@ -242,14 +242,14 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
     //   },
     // ],
 
-    "vuepress-plugin-baidu-autopush", // 百度自动推送
+    // "vuepress-plugin-baidu-autopush", // 百度自动推送
 
-    [
-      "vuepress-plugin-baidu-tongji", // 百度统计
-      {
-        hm: baiduCode,
-      },
-    ],
+    // [
+    //   "vuepress-plugin-baidu-tongji", // 百度统计
+    //   {
+    //     hm: baiduCode,
+    //   },
+    // ],
 
     // 全文搜索。 ⚠️注意：此插件会在打开网站时多加载部分js文件用于搜索，导致初次访问网站变慢。如在意初次访问速度的话可以不使用此插件！（推荐：vuepress-plugin-thirdparty-search）
     'fulltext-search',
@@ -336,28 +336,28 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
     [
       "vuepress-plugin-comment", // 评论
       {
-        // choosen: "gitalk",
-        // options: {
-        //   clientID: "a6e1355287947096b88b",
-        //   clientSecret: "f0e77d070fabfcd5af95bebb82b2d574d7248d71",
-        //   repo: "blog-gitalk-comment", // GitHub 仓库
-        //   owner: "xugaoyi", // GitHub仓库所有者
-        //   admin: ["xugaoyi"], // 对仓库有写权限的人
-        //   // distractionFreeMode: true,
-        //   pagerDirection: "last", // 'first'正序 | 'last'倒序
-        //   id: "<%- (frontmatter.permalink || frontmatter.to.path).slice(-16) %>", //  页面的唯一标识,长度不能超过50
-        //   title: "「评论」<%- frontmatter.title %>", // GitHub issue 的标题
-        //   labels: ["Gitalk", "Comment"], // GitHub issue 的标签
-        //   body: "页面：<%- window.location.origin + (frontmatter.to.path || window.location.pathname) %>", // GitHub issue 的内容
-        // },
-
-        choosen: "valine",
+        choosen: "gitalk",
         options: {
-          el: "#valine-vuepress-comment",
-          appId: "hCUxaf9q9gLKU3MHwHrB0GUf-gzGzoHsz",
-          appKey: "sEbh3h3V5DjJ168OLQ0ZTWdf",
-          visitor: true
+          clientID: "c3b7d1549979a788b47c",
+          clientSecret: "2f11d691e8e7bd455f321695c011826c3374435f",
+          repo: "my-blog-next", // GitHub 仓库
+          owner: "Mochenghualei", // GitHub仓库所有者
+          admin: ["Mochenghualei"], // 对仓库有写权限的人
+          // distractionFreeMode: true,
+          pagerDirection: "last", // 'first'正序 | 'last'倒序
+          id: "<%- (frontmatter.permalink || frontmatter.to.path).slice(-16) %>", //  页面的唯一标识,长度不能超过50
+          title: "「评论」<%- frontmatter.title %>", // GitHub issue 的标题
+          labels: ["Gitalk", "Comment"], // GitHub issue 的标签
+          body: "页面：<%- window.location.origin + (frontmatter.to.path || window.location.pathname) %>", // GitHub issue 的内容
         },
+
+        // choosen: "valine",
+        // options: {
+        //   el: "#valine-vuepress-comment",
+        //   appId: "hCUxaf9q9gLKU3MHwHrB0GUf-gzGzoHsz",
+        //   appKey: "sEbh3h3V5DjJ168OLQ0ZTWdf",
+        //   visitor: true
+        // },
       },
     ],
     [
